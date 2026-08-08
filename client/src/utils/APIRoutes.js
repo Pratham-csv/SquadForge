@@ -8,3 +8,7 @@ export const myProjectsRoute = `${host}/api/projects/my`;
 export const joinProjectRoute = `${host}/api/projects/join`;
 export const projectRequestsRoute = `${host}/api/projects/requests`;
 export const handleRequestRoute = `${host}/api/projects/handle-request`;
+export const getProjectRoute = `${host}/api/projects`;
+
+export const getMessagesRoute = `${host}/api/messages`;
+export const addMessageRoute = `${host}/api/messages/add`;

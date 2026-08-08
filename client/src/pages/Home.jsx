@@ -203,11 +203,16 @@ function Home() {
                 Role: {getMyRole(project)} · Code: {project.inviteCode}
               </p>
             </div>
-            {project.owner === user._id && (
-              <button onClick={() => loadRequests(project._id)}>
-                View Requests
+            <div className="actions">
+              <button onClick={() => navigate(`/project/${project._id}`)}>
+                Open
               </button>
-            )}
+              {project.owner === user._id && (
+                <button onClick={() => loadRequests(project._id)}>
+                  View Requests
+                </button>
+              )}
+            </div>
           </div>
         ))}
       </section>

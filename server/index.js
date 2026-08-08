@@ -1,10 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const projectRoutes = require("./routes/projects");
+const socket = require("socket.io");
 require("dotenv").config();
 
 const authRoutes = require("./routes/auth");
+const projectRoutes = require("./routes/projects");
+const messageRoutes = require("./routes/messages");
 
 const app = express();
 
@@ -17,7 +19,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
-
+app.use("/api/messages", messageRoutes);
 
 mongoose
   .connect(process.env.MONGO_URL)
@@ -30,6 +32,23 @@ mongoose
 
 const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log("Server started on port", PORT);
+});
+
+const io = socket(server, {
+  cors: {
+    origin: process.env.ORIGIN || "http://localhost:3000",
+    credentials: true,
+  },
+});
+
+io.on("connection", (socket) => {
+  socket.on("join-project", (projectId) => {
+    socket.join(projectId);
+  });
+
+  socket.on("send-project-msg", (data) => {
+    socket.to(data.projectId).emit("receive-project-msg", data.message);
+  });
 });

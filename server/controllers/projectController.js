@@ -144,3 +144,29 @@ module.exports.handleJoinRequest = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.getProject = async (req, res, next) => {
+  try {
+    const { projectId, userId } = req.params;
+
+    const project = await Project.findById(projectId).populate(
+      "members.user",
+      "username email"
+    );
+
+    if (!project) {
+      return res.json({ status: false, msg: "Project not found" });
+    }
+
+    const allowed = project.members.some(
+      (m) => m.user._id.toString() === userId
+    );
+    if (!allowed) {
+      return res.json({ status: false, msg: "Not a project member" });
+    }
+
+    return res.json({ status: true, project });
+  } catch (err) {
+    next(err);
+  }
+};
