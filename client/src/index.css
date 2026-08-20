@@ -4,7 +4,66 @@
   box-sizing: border-box;
 }
 
+:root {
+  --bg: #070708;
+  --bg-elevated: #121214;
+  --bg-soft: #0d0d10;
+  --line: #2a2a2e;
+  --text: #f2f2f4;
+  --muted: #8b8b93;
+  --accent: #c8ff3d;
+  --accent-dim: rgba(200, 255, 61, 0.12);
+  --danger: #ff6b6b;
+  --radius: 16px;
+  --font-display: "Syne", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
 body {
-  font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  background: #0a0a0b;
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--accent);
+  color: #0a0a0b;
+}
+
+@keyframes sf-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sf-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }

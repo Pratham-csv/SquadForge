@@ -15,3 +15,6 @@ yarn-error.log*
 
 # build
 client/build/
+
+# local tooling (compiled redis, etc.)
+.tools/
